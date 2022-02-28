@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Post({ objectID, title, author, url }) {
   return (
-    <div className="news-container" style={{ backgroundColor: "beige" }}>
+    <div className="news-container">
       <table>
         <tbody>
           <tr className="title">

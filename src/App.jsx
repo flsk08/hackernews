@@ -13,7 +13,7 @@ function App() {
       <div className="posts">
         {news.map((post) => (
           <Post
-             key={post.objectID}
+            key={post.objectID}
             objectID={post.objectID}
             title={post.title}
             author={post.author}
