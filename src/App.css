@@ -15,6 +15,7 @@
 
 a {
   color: white;
+  letter-spacing: 0.1rem;
 }
 
 a:hover {

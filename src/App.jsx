@@ -18,6 +18,8 @@ function App() {
             title={post.title}
             author={post.author}
             url={post.url}
+            numOfComments={post.num_comments}
+            points={post.points}
           />
         ))}
       </div>

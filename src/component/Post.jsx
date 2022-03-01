@@ -1,6 +1,13 @@
 import React from "react";
 
-export default function Post({ objectID, title, author, url }) {
+export default function Post({
+  objectID,
+  title,
+  author,
+  url,
+  numOfComments,
+  points,
+}) {
   return (
     <div className="news-container">
       <table>
@@ -13,7 +20,9 @@ export default function Post({ objectID, title, author, url }) {
             </td>
           </tr>
           <tr className="author">
-            <td>by: {author}</td>
+            <td>
+              by: {author} | points: {points} | comments: {numOfComments}
+            </td>
           </tr>
         </tbody>
       </table>
