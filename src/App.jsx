@@ -8,15 +8,19 @@ function App() {
   const [news, setNews] = useState([]);
   const [topic, setTopic] = useState("react");
   const [userInput, setUserInput] = useState("");
+  const [page, setPage] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    fetch(`http://hn.algolia.com/api/v1/search?query=${topic}`)
+    isLoading(true);
+    fetch(`http://hn.algolia.com/api/v1/search?query=${topic}&page=${page}`)
       .then((response) => response.json())
       .then((data) => setNews(data.hits))
+      setIsLoading(false)
       .catch((error) => {
         console.error("Error:", error);
       });
-  }, [topic]);
+  }, [topic, page]);
 
   const handleClick = () => {
     setTopic(userInput);
@@ -34,6 +38,7 @@ function App() {
       />
       <button onClick={handleClick}>Search</button>
       <div className="posts">
+        isLoading ? 
         {news.map((post) => (
           <Post
             key={post.id}
