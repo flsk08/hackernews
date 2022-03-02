@@ -9,6 +9,7 @@ function App() {
   const [topic, setTopic] = useState("react");
   const [userInput, setUserInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [pageIndex, setPageIndex] = useState(1);
 
   // console.log(userInput);
   // console.log("newsstate", news);
@@ -19,7 +20,7 @@ function App() {
     const getNews = async () => {
       try {
         const resp = await axios.get(
-          `http://hn.algolia.com/api/v1/search?query=${topic}`
+          `http://hn.algolia.com/api/v1/search?query=${topic}&page=${pageIndex}`
         );
         setNews(resp.data.hits);
         setIsLoading(false);
@@ -29,7 +30,7 @@ function App() {
       }
     };
     getNews();
-  }, [topic]);
+  }, [topic, pageIndex]);
 
   // fetch(`http://hn.algolia.com/api/v1/search?query=${topic}&page=${page}`)
   //     .then((response) => response.json())
@@ -43,6 +44,14 @@ function App() {
     setTopic(userInput);
     setUserInput("");
   };
+
+  const onFirstPage = pageIndex === 1;
+  const onLastPage = pageIndex === news.length - 1;
+
+  //here define event handlers
+  const goBack = () => setPageIndex(prevPageIndex => prevPageIndex - 1);
+  const goNextPage = () => setPageIndex(prevPageIndex => prevPageIndex + 1)
+
 
   return (
     <div className="App">
@@ -89,6 +98,15 @@ function App() {
         )}
         {news.length === 0 && isLoading === false && <div>nix gefunden</div>}
       </div>
+      <div>
+        <button onClick={goBack} disabled={onFirstPage}>
+          Go Back
+        </button>
+        {pageIndex}
+        <button onClick={goNextPage} disabled={onLastPage}>
+          Next Page
+        </button>
+        </div>
     </div>
   );
 }
