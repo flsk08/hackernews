@@ -13,7 +13,7 @@ export default function Post({
         <tbody>
           <tr className="title">
             <td>
-              <a style={{ textDecoration: "none" }} href={url}>
+              <a href={url}>
                 {title}
               </a>
             </td>
