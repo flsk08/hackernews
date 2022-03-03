@@ -1,51 +1,117 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
 import Post from "./component/Post";
-
-// import Searchbar from "./component/Searchbar";
+import axios from "axios";
+import Spinner from "react-bootstrap/Spinner";
+import Searchbar from "./component/Searchbar";
+import Pagination from "./component/Pagination";
 
 function App() {
   const [news, setNews] = useState([]);
   const [topic, setTopic] = useState("react");
   const [userInput, setUserInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [pageIndex, setPageIndex] = useState(1);
+
+  // console.log(userInput);
+  // console.log("newsstate", news);
+  //console.log("isLoading", isLoading);
+  console.log("page", pageIndex);
 
   useEffect(() => {
-    fetch(`http://hn.algolia.com/api/v1/search?query=${topic}`)
-      .then((response) => response.json())
-      .then((data) => setNews(data.hits))
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }, [topic]);
+    setIsLoading(true);
+    const getNews = async () => {
+      try {
+        const resp = await axios.get(
+          `http://hn.algolia.com/api/v1/search?query=${topic}&page=${pageIndex}`
+        );
+        setNews(resp.data.hits);
+        setIsLoading(false);
+      } catch (err) {
+        console.error("Error:", err);
+        setIsLoading(false);
+      }
+    };
+    getNews();
+  }, [topic, pageIndex]);
+
+  // fetch(`http://hn.algolia.com/api/v1/search?query=${topic}&page=${page}`)
+  //     .then((response) => response.json())
+  //     .then((data) => setNews(data.hits))
+  //     setIsLoading(false)
+  //     .catch((error) => {
+  //       console.error("Error:", error);
+  //     });
 
   const handleClick = () => {
     setTopic(userInput);
-    userInput("");
+    setUserInput("");
+    setPageIndex(1);
   };
 
-  console.log(userInput);
-  console.log("newsstate", news);
+  const goBack = () => {
+    setPageIndex((prevPageIndex) => prevPageIndex - 1);
+  };
+
+  const goToNext = () => {
+    setPageIndex((prevPageIndex) => prevPageIndex + 1);
+  };
+
+  const onFirstPage = pageIndex === 1;
+  const onLastPage = pageIndex === news.length - 1;
+
   return (
     <div className="App">
-      <input
-        type="text"
-        value={userInput}
-        onChange={(e) => setUserInput(e.target.value)}
+      <h1>Hacker News</h1>
+      <Searchbar
+        handleClick={handleClick}
+        userInput={userInput}
+        setUserInput={setUserInput}
       />
-      <button onClick={handleClick}>Search</button>
       <div className="posts">
-        {news.map((post) => (
-          <Post
-            key={post.id}
-            id={post.id}
-            title={post.title}
-            author={post.author}
-            url={post.url}
-            //numOfComments={post.num_comments}
-            points={post.points}
-          />
-        ))}
+        {/* {isLoading && <Spinner animation="border" />}
+        {!isLoading &&
+          news.map((post) => (
+            <Post
+              key={post.objectID}
+              objectID={post.objectID}
+              title={post.title}
+              author={post.author}
+              url={post.url}
+              numOfComments={post.num_comments}
+              points={post.points}
+            />
+          ))} */}
+
+        {isLoading ? (
+          <Spinner animation="border" />
+        ) : (
+          news.map((post) => (
+            <Post
+              key={post.objectID}
+              objectID={post.objectID}
+              title={post.title}
+              author={post.author}
+              url={post.url}
+              numOfComments={post.num_comments}
+              points={post.points}
+            />
+          ))
+        )}
+        {news.length === 0 && isLoading === false && (
+          <div>No results found for: {topic}</div>
+        )}
       </div>
+      {news.length !== 0 && isLoading === false && (
+        <Pagination
+          goBack={goBack}
+          onFirstPage={onFirstPage}
+          pageIndex={pageIndex}
+          news={news}
+          goToNext={goToNext}
+          onLastPage={onLastPage}
+        />
+      )}
     </div>
   );
 }

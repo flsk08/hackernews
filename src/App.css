@@ -16,6 +16,7 @@
 a {
   color: white;
   letter-spacing: 0.1rem;
+  text-decoration: none;
 }
 
 a:hover {
@@ -26,4 +27,18 @@ a:hover {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue";
   font-size: 0.8rem;
+}
+
+.searchBtn {
+  background-color: white;
+  color: black;
+  border: 1px solid white;
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+
+#spinner {
+  display:flex;
+  justify-content: center;
+  align-items: center;
 }
