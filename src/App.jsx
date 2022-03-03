@@ -43,6 +43,8 @@ function App() {
   const handleClick = () => {
     setTopic(userInput);
     setUserInput("");
+    //newcode
+    setPageIndex(1);
   };
 
   const onFirstPage = pageIndex === 1;
@@ -67,7 +69,7 @@ function App() {
         Search
       </button>
       <div className="posts">
-        {/* {isLoading && <Spinner animation="border" />}
+        {isLoading && <Spinner animation="border" />}
         {!isLoading &&
           news.map((post) => (
             <Post
@@ -79,9 +81,9 @@ function App() {
               numOfComments={post.num_comments}
               points={post.points}
             />
-          ))} */}
+          ))}
 
-        {isLoading ? (
+      {/*   {isLoading ? (
           <Spinner animation="border" />
         ) : (
           news.map((post) => (
@@ -95,18 +97,18 @@ function App() {
               points={post.points}
             />
           ))
-        )}
+        )} */}
         {news.length === 0 && isLoading === false && <div>nix gefunden</div>}
       </div>
-      <div>
+     {!isLoading && news.length !== 0 && (<div>
         <button onClick={goBack} disabled={onFirstPage}>
           Go Back
         </button>
-        {pageIndex}
+         {pageIndex} of {news.length} 
         <button onClick={goNextPage} disabled={onLastPage}>
           Next Page
         </button>
-        </div>
+        </div>)}
     </div>
   );
 }
