@@ -37,8 +37,8 @@ a:hover {
   margin-left: 0.5rem;
 }
 
-.loading {
-  display: flex;
+#spinner {
+  display:flex;
   justify-content: center;
-  font-size: 1.5rem;
+  align-items: center;
 }

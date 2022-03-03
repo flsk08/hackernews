@@ -3,23 +3,27 @@ import React, { useState, useEffect } from "react";
 import Post from "./component/Post";
 import axios from "axios";
 import Spinner from "react-bootstrap/Spinner";
+import Searchbar from "./component/Searchbar";
+import Pagination from "./component/Pagination";
 
 function App() {
   const [news, setNews] = useState([]);
   const [topic, setTopic] = useState("react");
   const [userInput, setUserInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [pageIndex, setPageIndex] = useState(1);
 
   // console.log(userInput);
   // console.log("newsstate", news);
-  console.log("isLoading", isLoading);
+  //console.log("isLoading", isLoading);
+  console.log("page", pageIndex);
 
   useEffect(() => {
     setIsLoading(true);
     const getNews = async () => {
       try {
         const resp = await axios.get(
-          `http://hn.algolia.com/api/v1/search?query=${topic}`
+          `http://hn.algolia.com/api/v1/search?query=${topic}&page=${pageIndex}`
         );
         setNews(resp.data.hits);
         setIsLoading(false);
@@ -29,7 +33,7 @@ function App() {
       }
     };
     getNews();
-  }, [topic]);
+  }, [topic, pageIndex]);
 
   // fetch(`http://hn.algolia.com/api/v1/search?query=${topic}&page=${page}`)
   //     .then((response) => response.json())
@@ -42,21 +46,28 @@ function App() {
   const handleClick = () => {
     setTopic(userInput);
     setUserInput("");
+    setPageIndex(1);
   };
+
+  const goBack = () => {
+    setPageIndex((prevPageIndex) => prevPageIndex - 1);
+  };
+
+  const goToNext = () => {
+    setPageIndex((prevPageIndex) => prevPageIndex + 1);
+  };
+
+  const onFirstPage = pageIndex === 1;
+  const onLastPage = pageIndex === news.length - 1;
 
   return (
     <div className="App">
       <h1>Hacker News</h1>
-      <input
-        className="searchInput"
-        type="text"
-        placeholder="Search..."
-        value={userInput}
-        onChange={(e) => setUserInput(e.target.value)}
+      <Searchbar
+        handleClick={handleClick}
+        userInput={userInput}
+        setUserInput={setUserInput}
       />
-      <button onClick={handleClick} className="searchBtn">
-        Search
-      </button>
       <div className="posts">
         {/* {isLoading && <Spinner animation="border" />}
         {!isLoading &&
@@ -87,8 +98,20 @@ function App() {
             />
           ))
         )}
-        {news.length === 0 && isLoading === false && <div>nix gefunden</div>}
+        {news.length === 0 && isLoading === false && (
+          <div>No results found for: {topic}</div>
+        )}
       </div>
+      {news.length !== 0 && isLoading === false && (
+        <Pagination
+          goBack={goBack}
+          onFirstPage={onFirstPage}
+          pageIndex={pageIndex}
+          news={news}
+          goToNext={goToNext}
+          onLastPage={onLastPage}
+        />
+      )}
     </div>
   );
 }
