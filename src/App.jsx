@@ -104,10 +104,10 @@ function App() {
         )}
         {news.length === 0 && isLoading === false && (
           <>
-          <div className="NoResults">Sorry <span role="img" aria-label="sad"><p>&#128577;</p></span>, we could't find any results for: <br/>"{topic}"
+          <div className="NoResults">Sorry <span role="img" aria-label="sad"><p>&#128577;</p></span>, we couldn't find any results for: <br/>"{topic}"
             </div>
           <div className="NoResultsP">
-            <ul>
+            <ul className="NoResultsList">
             <li>Please double-check the spelling.</li>
             <li>Try other search terms.</li>
             </ul>

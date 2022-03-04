@@ -5,7 +5,7 @@ export default function Pagination({goBack, onFirstPage, pageIndex, news, goToNe
   return (
     <div className="paginationBtn">
       {!onFirstPage &&
-        <button onClick={goBack} disabled={onFirstPage}>
+        <button className="paginationBtn1" onClick={goBack} disabled={onFirstPage}>
         Previous
       </button>
       }
@@ -13,7 +13,7 @@ export default function Pagination({goBack, onFirstPage, pageIndex, news, goToNe
         {pageIndex} of {newsDetails.nbPages}
       </span>
       {!onLastPage &&
-        <button onClick={goToNext} disabled={onLastPage}>
+        <button className="paginationBtn2" onClick={goToNext} disabled={onLastPage}>
         Next
       </button>}
       
