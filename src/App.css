@@ -29,6 +29,11 @@ a:hover {
   font-size: 0.8rem;
 }
 
+.searchInput {
+  width: 250px;
+  display: inline;
+}
+
 .searchBtn {
   background-color: white;
   color: black;
@@ -38,7 +43,7 @@ a:hover {
 }
 
 #spinner {
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
 }
