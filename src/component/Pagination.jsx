@@ -1,6 +1,7 @@
-import React from 'react'
+import React from "react";
 
 export default function Pagination({goBack, onFirstPage, pageIndex, news, goToNext, onLastPage, newsDetails}) {
+
   return (
     <div className="paginationBtn">
       {!onFirstPage &&

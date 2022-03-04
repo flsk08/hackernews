@@ -17,7 +17,7 @@ function App() {
   // console.log(userInput);
   // console.log("newsstate", news);
   //console.log("isLoading", isLoading);
-  console.log("page", pageIndex);
+  //console.log("page", pageIndex);
 
   useEffect(() => {
     setIsLoading(true);
@@ -85,8 +85,10 @@ function App() {
             />
           ))} */}
 
-      {isLoading ? (
-          <Spinner animation="border" />
+        {isLoading ? (
+          <div className="spinner">
+            <Spinner animation="border" />
+          </div>
         ) : (
           news.map((post) => (
             <Post
