@@ -12,11 +12,12 @@ function App() {
   const [userInput, setUserInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [pageIndex, setPageIndex] = useState(1);
+  const [newsDetails, setNewsDetails] = useState(0);
 
   // console.log(userInput);
   // console.log("newsstate", news);
   //console.log("isLoading", isLoading);
-  console.log("page", pageIndex);
+  //console.log("page", pageIndex);
 
   useEffect(() => {
     setIsLoading(true);
@@ -26,6 +27,7 @@ function App() {
           `http://hn.algolia.com/api/v1/search?query=${topic}&page=${pageIndex}`
         );
         setNews(resp.data.hits);
+        setNewsDetails(resp.data);
         setIsLoading(false);
       } catch (err) {
         console.error("Error:", err);
@@ -84,7 +86,9 @@ function App() {
           ))} */}
 
         {isLoading ? (
-          <Spinner animation="border" />
+          <div className="spinner">
+            <Spinner animation="border" />
+          </div>
         ) : (
           news.map((post) => (
             <Post
@@ -99,11 +103,22 @@ function App() {
           ))
         )}
         {news.length === 0 && isLoading === false && (
-          <div>No results found for: {topic}</div>
+          <>
+          <div className="NoResults">Sorry <span role="img" aria-label="sad"><p>&#128577;</p></span>, we could't find any results for: <br/>"{topic}"
+            </div>
+          <div className="NoResultsP">
+            <ul>
+            <li>Please double-check the spelling.</li>
+            <li>Try other search terms.</li>
+            </ul>
+          </div>
+          </>
         )}
+
       </div>
       {news.length !== 0 && isLoading === false && (
         <Pagination
+          newsDetails={newsDetails}
           goBack={goBack}
           onFirstPage={onFirstPage}
           pageIndex={pageIndex}
