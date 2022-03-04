@@ -42,3 +42,32 @@ a:hover {
   justify-content: center;
   color: white;
 }
+
+.NoResults {
+  padding-top: 9rem;
+  padding-bottom: 2rem;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  text-transform: uppercase;
+  color: #2247c3;
+  font-size: 1.9rem;
+  background: rgb(34,71,195);
+  background: linear-gradient(180deg, rgba(34,71,195,1) 22%, rgba(255,240,208,1) 75%);
+  font-weight: 800;
+
+}
+
+.NoResultsP {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  list-style: none;
+  letter-spacing: 0.18rem;
+  font-size: 1.2rem;
+  background: rgb(34,71,195);
+  background: linear-gradient(0deg, rgba(34,71,195,1) 22%, rgba(255,240,208,1) 75%);
+  height: 10rem;
+  color: rgb(29, 28, 28);
+  font-weight: 600;
+}
